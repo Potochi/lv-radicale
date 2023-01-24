@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  radicale:
+    build:
+      context: container
+      dockerfile: Dockerfile
+
+    ports:
+      - "$LISTEN_ADDRESS:5232:5232"
+
+    security_opt:
+      - "no-new-privileges"
+
+    cpus: "$CPU_LIMIT"
+    mem_limit: "$MEM_LIMIT"
+    read_only: true
+
+    volumes:
+      - collections:/var/lib/radicale/collections/
+      - ./users:/var/lib/radicale/users:ro
+      - ./config.cfg:/etc/radicale/config:ro
+
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5232 || exit 1
+      interval: 3m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  collections:
