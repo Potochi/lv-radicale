@@ -12,6 +12,8 @@ services:
     security_opt:
       - "no-new-privileges"
 
+    restart: always
+
     cpus: "$CPU_LIMIT"
     mem_limit: "$MEM_LIMIT"
     read_only: true
