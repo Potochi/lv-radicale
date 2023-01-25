@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
 
     ports:
-      - "$LISTEN_ADDRESS:5232:5232"
+      - "$LISTEN_ADDRESS:$LISTEN_PORT:5232"
 
     security_opt:
       - "no-new-privileges"
